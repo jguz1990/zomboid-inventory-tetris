@@ -9,8 +9,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 12,
-					["height"] = 24,
+					["width"] = 24,
+					["height"] = 48,
 				},
 				["position"] = {
 					["x"] = 0,

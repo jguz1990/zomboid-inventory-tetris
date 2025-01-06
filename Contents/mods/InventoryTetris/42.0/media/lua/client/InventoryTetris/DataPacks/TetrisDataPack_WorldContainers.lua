@@ -9,8 +9,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 12,
-					["height"] = 12,
+					["width"] = 24,
+					["height"] = 24,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -24,8 +24,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 2,
+					["width"] = 6,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -38,8 +38,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 5,
+					["width"] = 10,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -52,8 +52,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 2,
+					["width"] = 10,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -62,8 +62,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 2,
+					["width"] = 10,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -72,8 +72,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 2,
+					["width"] = 10,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -86,8 +86,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -101,8 +101,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -111,8 +111,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -121,8 +121,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -136,8 +136,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 2,
+					["width"] = 8,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -146,8 +146,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 2,
+					["width"] = 8,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -160,8 +160,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 12,
-					["height"] = 12,
+					["width"] = 24,
+					["height"] = 24,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -174,8 +174,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 3,
+					["width"] = 6,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -188,8 +188,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 2,
+					["width"] = 6,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -198,8 +198,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 2,
+					["width"] = 6,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -208,8 +208,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 2,
+					["width"] = 6,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -223,8 +223,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 4,
+					["width"] = 10,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -237,8 +237,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 4,
+					["width"] = 12,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -251,8 +251,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 4,
+					["width"] = 10,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -265,8 +265,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 7,
+					["width"] = 10,
+					["height"] = 14,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -279,8 +279,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 6,
+					["width"] = 6,
+					["height"] = 12,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -289,8 +289,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 6,
+					["width"] = 6,
+					["height"] = 12,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -303,8 +303,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -318,8 +318,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 5,
+					["width"] = 10,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -333,8 +333,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 4,
+					["width"] = 10,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -343,8 +343,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 4,
+					["width"] = 10,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -353,8 +353,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 4,
+					["width"] = 10,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -363,8 +363,8 @@ local containerPack = {
 			},
 			[4] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 4,
+					["width"] = 10,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -377,8 +377,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 5,
+					["width"] = 10,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -387,8 +387,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 5,
+					["width"] = 10,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -397,8 +397,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 5,
+					["width"] = 20,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -412,8 +412,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 7,
+					["width"] = 10,
+					["height"] = 14,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -422,8 +422,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 3,
+					["width"] = 10,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -436,8 +436,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 2,
+					["width"] = 10,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -446,8 +446,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 5,
+					["width"] = 8,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -456,8 +456,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 1,
-					["height"] = 5,
+					["width"] = 2,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -471,8 +471,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 7,
-					["height"] = 2,
+					["width"] = 14,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -481,8 +481,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 7,
-					["height"] = 4,
+					["width"] = 14,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -491,8 +491,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 7,
-					["height"] = 3,
+					["width"] = 14,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -501,8 +501,8 @@ local containerPack = {
 			},
 			[4] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 3,
+					["width"] = 6,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -511,8 +511,8 @@ local containerPack = {
 			},
 			[5] = {
 				["size"] = {
-					["width"] = 3,
-					["height"] = 3,
+					["width"] = 6,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -525,8 +525,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 7,
-					["height"] = 6,
+					["width"] = 14,
+					["height"] = 12,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -539,8 +539,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -549,8 +549,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -565,8 +565,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 2,
+					["width"] = 12,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -575,8 +575,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 2,
+					["width"] = 12,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -585,8 +585,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 2,
+					["width"] = 12,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -599,8 +599,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -609,8 +609,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -623,8 +623,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 4,
+					["width"] = 20,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -633,8 +633,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 3,
+					["width"] = 20,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -643,8 +643,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 4,
+					["width"] = 20,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -658,8 +658,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -672,8 +672,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 3,
+					["width"] = 20,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -682,8 +682,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 3,
+					["width"] = 20,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -692,8 +692,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 3,
+					["width"] = 20,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -723,8 +723,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 5,
+					["width"] = 20,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -733,8 +733,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 5,
+					["width"] = 20,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -747,8 +747,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -757,8 +757,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 2,
+					["width"] = 12,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -767,8 +767,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -782,8 +782,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -792,8 +792,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -802,8 +802,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -812,8 +812,8 @@ local containerPack = {
 			},
 			[4] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -822,8 +822,8 @@ local containerPack = {
 			},
 			[5] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 2,
@@ -832,8 +832,8 @@ local containerPack = {
 			},
 			[6] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 4,
+					["width"] = 8,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 2,
@@ -846,8 +846,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 3,
+					["width"] = 8,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -856,8 +856,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 3,
+					["width"] = 8,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -866,8 +866,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 3,
+					["width"] = 8,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 1,
@@ -876,8 +876,8 @@ local containerPack = {
 			},
 			[4] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 3,
+					["width"] = 8,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -890,8 +890,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 5,
-					["height"] = 3,
+					["width"] = 10,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -900,8 +900,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 4,
+					["width"] = 16,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -914,8 +914,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 12,
+					["width"] = 16,
+					["height"] = 24,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -928,8 +928,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 3,
+					["width"] = 20,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -938,8 +938,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 10,
-					["height"] = 8,
+					["width"] = 20,
+					["height"] = 16,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -952,8 +952,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 3,
+					["width"] = 16,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -962,8 +962,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 4,
+					["width"] = 16,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -972,8 +972,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 4,
+					["width"] = 16,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -987,8 +987,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 4,
+					["width"] = 16,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -997,8 +997,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 8,
-					["height"] = 4,
+					["width"] = 16,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -1012,8 +1012,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -1022,8 +1022,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -1032,8 +1032,8 @@ local containerPack = {
 			},
 			[3] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -1063,8 +1063,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 2,
+					["width"] = 12,
+					["height"] = 4,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -1073,8 +1073,8 @@ local containerPack = {
 			},
 			[2] = {
 				["size"] = {
-					["width"] = 6,
-					["height"] = 3,
+					["width"] = 12,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -1087,8 +1087,8 @@ local containerPack = {
 		["gridDefinitions"] = {
 			[1] = {
 				["size"] = {
-					["width"] = 4,
-					["height"] = 5,
+					["width"] = 8,
+					["height"] = 10,
 				},
 				["position"] = {
 					["x"] = 0,
