@@ -329,19 +329,19 @@ local bodySlotsToPocketDefinitions = {
     ["FullSuit"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             }
         }
@@ -349,19 +349,19 @@ local bodySlotsToPocketDefinitions = {
     ["FullSuitHead"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             }
         }
@@ -369,11 +369,11 @@ local bodySlotsToPocketDefinitions = {
     ["FullTop"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
         }
@@ -381,11 +381,11 @@ local bodySlotsToPocketDefinitions = {
     ["JacketHat"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
         }
@@ -393,11 +393,11 @@ local bodySlotsToPocketDefinitions = {
     ["JacketHat_Bulky"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
         }
@@ -405,7 +405,7 @@ local bodySlotsToPocketDefinitions = {
     ["Sweater"] = {
         gridDefinitions = {
             {
-                size = {width=4, height=1},
+                size = {width=6, height=2},
                 position = {x=0, y=0},
             },
         }
@@ -413,7 +413,7 @@ local bodySlotsToPocketDefinitions = {
     ["SweaterHat"] = {
         gridDefinitions = {
             {
-                size = {width=4, height=1},
+                size = {width=6, height=2},
                 position = {x=0, y=0},
             },
         }
@@ -421,11 +421,11 @@ local bodySlotsToPocketDefinitions = {
     ["Dress"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
         }
@@ -433,11 +433,11 @@ local bodySlotsToPocketDefinitions = {
     ["BathRobe"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
         }
@@ -445,19 +445,19 @@ local bodySlotsToPocketDefinitions = {
     ["Torso1Legs1"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             }
         }
@@ -465,19 +465,19 @@ local bodySlotsToPocketDefinitions = {
     ["Jacket"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -485,19 +485,19 @@ local bodySlotsToPocketDefinitions = {
     ["JacketSuit"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -505,19 +505,19 @@ local bodySlotsToPocketDefinitions = {
     ["Jacket_Bulky"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -525,19 +525,19 @@ local bodySlotsToPocketDefinitions = {
     ["Jacket_Down"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -545,19 +545,19 @@ local bodySlotsToPocketDefinitions = {
     ["TorsoExtra"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -565,19 +565,19 @@ local bodySlotsToPocketDefinitions = {
     ["TorsoExtraPlus1"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -585,19 +585,19 @@ local bodySlotsToPocketDefinitions = {
     ["TorsoExtraVest"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=4, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=4, y=0},
             }
         }
@@ -605,35 +605,35 @@ local bodySlotsToPocketDefinitions = {
     ["Boilersuit"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=2},
+                size = {width=2, height=4},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=2},
+                size = {width=2, height=4},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=2},
+                size = {width=2, height=4},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=2},
+                size = {width=2, height=4},
                 position = {x=3, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=1},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=1},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=1},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=1},
             }
         }
@@ -641,15 +641,15 @@ local bodySlotsToPocketDefinitions = {
     ["AmmoStrap"] = {
         gridDefinitions = {
             {
-                size = {width=2, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=2, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
         },
@@ -661,19 +661,19 @@ local bodySlotsToPocketDefinitions = {
     ["LowerBody"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             }
         }
@@ -681,19 +681,19 @@ local bodySlotsToPocketDefinitions = {
     ["Legs1"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             }
         }
@@ -701,19 +701,19 @@ local bodySlotsToPocketDefinitions = {
     ["Pants"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=2, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=3, y=0},
             }
         }
@@ -721,11 +721,11 @@ local bodySlotsToPocketDefinitions = {
     ["Skirt"] = {
         gridDefinitions = {
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=0, y=0},
             },
             {
-                size = {width=1, height=1},
+                size = {width=2, height=2},
                 position = {x=1, y=0},
             }
         }
