@@ -11,8 +11,8 @@ require("InventoryTetris/TetrisItemCategory")
 ---@field size Size2D
 ---@field position Vector2Lua
 
-local MAX_ITEM_HEIGHT = 30
-local MAX_ITEM_WIDTH = 10
+local MAX_ITEM_HEIGHT = 60
+local MAX_ITEM_WIDTH = 20
 
 TetrisContainerData = {}
 
@@ -108,7 +108,8 @@ function TetrisContainerData._calculateItemContainerDefinition(container, item)
     end
 
     local slotCount = 6 + capacity + bonus
-
+	local slotCount = slotCount * 2
+	
     -- Determine two numbers that multiply close to the slot count
     local x, y = TetrisContainerData._calculateDimensions(slotCount)
     if x < 2 then
@@ -142,6 +143,7 @@ function TetrisContainerData._calculateVehicleTrunkContainerDefinition(container
     local capacity = container:getCapacity()
 
     local size = 50 + capacity
+	local size = size * 2
     local x, y = TetrisContainerData._calculateDimensions(size)
     return {
         gridDefinitions = {{
