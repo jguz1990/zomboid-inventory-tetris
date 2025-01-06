@@ -1,7 +1,7 @@
 TetrisContainerData = TetrisContainerData or {}  -- Partial class
 
-local MAX_CONTAINER_WIDTH = 12
-local MAX_CONTAINER_HEIGHT = 50
+local MAX_CONTAINER_WIDTH = 24
+local MAX_CONTAINER_HEIGHT = 100
 
 function TetrisContainerData._calculateContainerDefinition(container)
     local definition = nil
@@ -39,7 +39,7 @@ function TetrisContainerData._calculateItemContainerDefinition(container, item)
     end
 
     local slotCount = math.ceil(capacity) * 2 + bonus
-
+	local slotCount = slotCount * 2
     local isInvCon = item:IsInventoryContainer()
     local maxItemSize = isInvCon and item:getMaxItemSize() or -1
 
@@ -75,6 +75,7 @@ function TetrisContainerData._calculateVehicleTrunkContainerDefinition(container
     local capacity = container:getCapacity()
 
     local size = 50 + capacity * 2.5
+	local size = size * 2
     local x, y = TetrisContainerData._calculateDimensions(size)
     return {
         gridDefinitions = {{
