@@ -15,8 +15,8 @@ function TetrisItemData._autoCalculateItemInfo(item, isSquished)
         local category = TetrisItemCategory.getCategory(item)
         data.maxStackSize = TetrisItemData._calculateItemStackability(item, category)
         data.width, data.height = TetrisItemData._calculateItemSize(item, category)
-        if data.width > 10 then data.width = 10 end
-        if data.height > 12 then data.height = 12 end
+        if data.width > 20 then data.width = 20 end
+        if data.height > 24 then data.height = 24 end
     end
 
     if isSquished then
@@ -38,90 +38,90 @@ function TetrisItemData._calculateItemSize(item, category)
 end
 
 function TetrisItemData._calculateItemSizeMagazine(item)
-    local width = 1
-    local height = 1
+    local width = 2
+    local height = 2
 
     local maxAmmo = item:getMaxAmmo()
     if maxAmmo > 15 then
-        height = 2
-        width = 1
+        height = 4
+        width = 2
     end
     if maxAmmo > 30 then
-        height = 3
-        width = 1
+        height = 6
+        width = 2
     end
     if maxAmmo > 45 then
-        height = 2
-        width = 2
+        height = 4
+        width = 4
     end
 
     return width, height
 end
 
 function TetrisItemData._calculateRangedWeaponSize(item)
-    local width = 2
-    local height = 1
+    local width = 4
+    local height = 2
 
     -- Read weight from the script item to easily ignore attachment weight
     local weight = item:getScriptItem():getActualWeight()
 
     if weight >= 2 then
-        width = 3
-        height = 1
-    end
-    if weight >= 3 then
-        width = 3
-        height = 2
-    end
-    if weight >= 4 then
-        width = 5
-        height = 2
-    end
-    if weight >= 5 then
         width = 6
         height = 2
     end
+    if weight >= 3 then
+        width = 6
+        height = 4
+    end
+    if weight >= 4 then
+        width = 10
+        height = 4
+    end
+    if weight >= 5 then
+        width = 12
+        height = 4
+    end
     if weight >= 6 then
-        width = 7
-        height = 2
+        width = 14
+        height = 4
     end
 
     return width, height
 end
 
 function TetrisItemData._calculateMeleeWeaponSize(item)
-    local width = 1
-    local height = 1
+    local width = 2
+    local height = 2
 
     local weight = item:getActualWeight()
 
     if weight >= 0.5 then
-        width = 1
-        height = 2
+        width = 2
+        height = 4
     end
     if weight >= 1.6 then
-        width = 1
-        height = 3
+        width = 2
+        height = 6
     end
     if weight >= 2.5 then
-        width = 1
-        height = 4
+        width = 2
+        height = 8
     end
     if weight >= 3.5 then
-        width = 2
-        height = 4
+        width = 4
+        height = 8
     end
     if weight >= 4 then
-        width = 2
-        height = 5
+        width = 4
+        height = 10
     end
 
     return width, height
 end
 
 function TetrisItemData._calculateItemSizeClothing(item)
-    local width = 2
-    local height = 2
+    local width = 4
+    local height = 4
 
     -- This shouldn't happen, but just in case a mod does something weird
     if item:IsClothing() == false then
@@ -131,20 +131,20 @@ function TetrisItemData._calculateItemSizeClothing(item)
 
     local bulletDef = item:getBulletDefense()
     if bulletDef >= 50 then
-        width = 3
-        height = 3
+        width = 6
+        height = 6
     else
         -- Read weight from the script item to ignore wetness weight and the like
         local weight = item:getScriptItem():getActualWeight()
         if weight >= 3.0 then
-            width = 3
-            height = 3
+            width = 6
+            height = 6
         elseif weight <= 0.5 then
-            width = 1
-            height = 1
-        elseif weight <= 1.0 then
-            width = 1
+            width = 2
             height = 2
+        elseif weight <= 1.0 then
+            width = 2
+            height = 4
         end
     end
 
@@ -169,17 +169,17 @@ end
 -- Returns dimensions for a container item based on the number of items it can hold
 -- Always returns a dimension that is >= innerSize
 function TetrisItemData._calculateContainerItemSizeFromInner(innerSize)
-    local MAX_ITEM_DIM = 12
+    local MAX_ITEM_DIM = 24
     if innerSize > MAX_ITEM_DIM * MAX_ITEM_DIM then
         return MAX_ITEM_DIM, MAX_ITEM_DIM
     end
 
     local best = 99999999
-    local bestX = 1
-    local bestY = 1
+    local bestX = 2
+    local bestY = 2
 
-    for x = 1, MAX_ITEM_DIM do
-        for y = 1, MAX_ITEM_DIM do
+    for x = 2, MAX_ITEM_DIM do
+        for y = 2, MAX_ITEM_DIM do
             local result = x * y
             local diff = math.abs(result - innerSize) + math.abs(x - y) -- Encourage square shapes 
             if diff < best and result >= innerSize then
@@ -201,26 +201,26 @@ function TetrisItemData._calculateMiscSize(item)
 end
 
 function TetrisItemData._calculateItemSizeWeightBased(item)
-    local width = 1
-    local height = 1
+    local width = 2
+    local height = 2
 
     local weight = item:getActualWeight()
 
     if weight < 1 then
-        width = 1
-        height = 1
+        width = 2
+        height = 2
     elseif weight < 2 then
-        width = 1
-        height = 2
+        width = 2
+        height = 4
     elseif weight < 3 then
-        width = 2
-        height = 2
+        width = 4
+        height = 4
     elseif weight < 4 then
-        width = 2
-        height = 3
+        width = 4
+        height = 6
     elseif weight < 5 then
-        width = 3
-        height = 3
+        width = 6
+        height = 6
     else
         return TetrisContainerData._calculateDimensions(weight * 2, 2)
     end
@@ -241,7 +241,7 @@ function TetrisItemData._calculateFluidContainerSize(item)
     -- Small containers are 1x1
     local fluidCapacity = fluidContainer:getCapacity()
     if fluidCapacity <= 0.5 then
-        return 1, 1
+        return 2, 2
     end
 
     -- Everything else is 1 slot per liter with a minimum size of 1x2
@@ -260,15 +260,15 @@ function TetrisItemData._calculateItemSizeWeightBasedTall(item)
 end
 
 function TetrisItemData._calculateEntertainmentSize(item)
-    local width = 1
-    local height = 1
+    local width = 2
+    local height = 2
 
     local mediaData = item:getMediaData()
     if mediaData then
         local category = mediaData:getCategory()
         if category == "CDs" then
-            width = 1
-            height = 1
+            width = 2
+            height = 2
         end
     end
 
@@ -276,16 +276,16 @@ function TetrisItemData._calculateEntertainmentSize(item)
 end
 
 function TetrisItemData._calculateMoveableSize(item)
-    local width = 1
-    local height = 1
+    local width = 2
+    local height = 2
 
     local weight = item:getActualWeight()
     return TetrisContainerData._calculateDimensions(weight * 2, 2)
 end
 
 TetrisItemData._itemClassToSizeCalculation = {
-    [TetrisItemCategory.AMMO] = {x = 1, y = 1},
-    [TetrisItemCategory.BOOK] = {x = 1, y = 2},
+    [TetrisItemCategory.AMMO] = {x = 2, y = 2},
+    [TetrisItemCategory.BOOK] = {x = 4, y = 6},
     [TetrisItemCategory.CLOTHING] = TetrisItemData._calculateItemSizeClothing,
     [TetrisItemCategory.CONTAINER] = TetrisItemData._calculateItemSizeContainer,
     [TetrisItemCategory.ENTERTAINMENT] = TetrisItemData._calculateEntertainmentSize,
@@ -298,7 +298,7 @@ TetrisItemData._itemClassToSizeCalculation = {
     [TetrisItemCategory.MISC] = TetrisItemData._calculateMiscSize,
     [TetrisItemCategory.MOVEABLE] = TetrisItemData._calculateMoveableSize,
     [TetrisItemCategory.RANGED] = TetrisItemData._calculateRangedWeaponSize,
-    [TetrisItemCategory.SEED] = {x = 1, y = 1},
+    [TetrisItemCategory.SEED] = {x = 2, y = 2},
 }
 
 
