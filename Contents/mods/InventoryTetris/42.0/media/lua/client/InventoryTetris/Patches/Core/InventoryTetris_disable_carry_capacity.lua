@@ -18,24 +18,32 @@ end
 
 -- Sets the container's capacity to a very high value, calls the callback function, and then resets the container's capacity
 -- Even if an error occurs, the container's capacity will be reset to its original value
-local function disableCarryWeightSafe(container, callback, ...)
+local function disableCarryWeightOnContainer(container, callback, ...)
+    if instanceof(container, "InventoryContainer") then
+        container = container:getInventory()
+    end
+
+    local originalCapacity = container:getCapacity()
+    local originalType = container:getType()
+
     -- Skip player's main inventory or fragile containers or if the option is disabled
-    if not container or SandboxVars.InventoryTetris.EnforceCarryWeight or isPlayerInv(container) then
+    if not container or originalType == "floor" or SandboxVars.InventoryTetris.EnforceCarryWeight or isPlayerInv(container) then
         return callback(...)
     end
+
     local containerDef = TetrisContainerData.getContainerDefinition(container)
     if containerDef.isFragile then
         return callback(...)
     end
 
-    local originalCapacity = container:getCapacity()
-    container:setCapacity(99995)
-    -- Because definition is retrieved and calculated by capacity we set it manually here to avoid issues
+    container:setCapacity(49) -- 49 so we don't match the real floor's key of floor_50
+    container:setType("floor") -- Pretend we're the floor
     TetrisContainerData.setContainerDefinition(container, containerDef)
 
     local results = {pcall(callback, ...)}
 
     TetrisContainerData.setContainerDefinition(container, nil)
+    container:setType(originalType)
     container:setCapacity(originalCapacity)
 
     if results[1] then
@@ -50,45 +58,47 @@ Events.OnGameStart.Add(function()
     require("ISUI/ISInventoryPane")
     local og_canPutIn_pane = ISInventoryPane.canPutIn
     function ISInventoryPane:canPutIn()
-        return disableCarryWeightSafe(self.inventory, og_canPutIn_pane, self)
+        local container = self.inventory
+        return disableCarryWeightOnContainer(container, og_canPutIn_pane, self)
     end
 
     local og_update_draggedItems = ISInventoryPaneDraggedItems.update
     function ISInventoryPaneDraggedItems:update()
         local container = self:getDropContainer()
-        return disableCarryWeightSafe(container, og_update_draggedItems, self)
+        return disableCarryWeightOnContainer(container, og_update_draggedItems, self)
     end
 
     require("ISUI/ISInventoryPage")
     local og_canPutIn_page = ISInventoryPage.canPutIn
     function ISInventoryPage:canPutIn()
         local container = self.mouseOverButton and self.mouseOverButton.inventory or nil
-        return disableCarryWeightSafe(container, og_canPutIn_page, self)
+        return disableCarryWeightOnContainer(container, og_canPutIn_page, self)
     end
 
     require("TimedActions/ISInventoryTransferAction")
     local og_isValid = ISInventoryTransferAction.isValid
     function ISInventoryTransferAction:isValid()
-        return disableCarryWeightSafe(self.destContainer, og_isValid, self)
+        local container = self.destContainer
+        return disableCarryWeightOnContainer(container, og_isValid, self)
     end
 
     require("ISUI/ISInventoryPaneContextMenu")
     local og_hasRoomForAny = ISInventoryPaneContextMenu.hasRoomForAny
     function ISInventoryPaneContextMenu.hasRoomForAny(playerObj, container, items)
-        return disableCarryWeightSafe(container, og_hasRoomForAny, playerObj, container, items)
+        return disableCarryWeightOnContainer(container, og_hasRoomForAny, playerObj, container, items)
     end
 
     require("Foraging/ISBaseIcon")
     local og_doContextMenu = ISBaseIcon.doContextMenu
     function ISBaseIcon:doContextMenu(_context)
         local plInventory = self.character:getInventory();
-        return disableCarryWeightSafe(plInventory, og_doContextMenu, self, _context)
+        return disableCarryWeightOnContainer(plInventory, og_doContextMenu, self, _context)
     end
 
     require("ISUI/ISVehicleMenu")
     local og_moveItemsOnSeat = ISVehicleMenu.moveItemsOnSeat
     function ISVehicleMenu.moveItemsOnSeat(seat, newSeat, playerObj, moveThem, itemListIndex)
         local container = newSeat:getItemContainer()
-        return disableCarryWeightSafe(container, og_moveItemsOnSeat, seat, newSeat, playerObj, moveThem, itemListIndex)
+        return disableCarryWeightOnContainer(container, og_moveItemsOnSeat, seat, newSeat, playerObj, moveThem, itemListIndex)
     end
 end)

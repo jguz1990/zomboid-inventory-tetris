@@ -1,5 +1,5 @@
 require("InventoryTetris/UI/Grid/ItemGridUI")
-require("InventoryTetris/TetrisItemCategory")
+require("InventoryTetris/Data/TetrisItemCategory")
 
 -- Premade textures for supported scales so that any scale gets pixel perfect grids
 local GridBackgroundTexturesByScale = {
@@ -30,7 +30,6 @@ local colorsByCategory = {
     [TetrisItemCategory.MAGAZINE] = {0.85, 0.5, 0.05},
     [TetrisItemCategory.ATTACHMENT] = {0.85, 0.4, 0.2},
     [TetrisItemCategory.FOOD] = {0.1, 0.8, 0.25},
-    [TetrisItemCategory.DRINK] = {0.1, 0.6, 0.2},
     [TetrisItemCategory.CLOTHING] = {0.5, 0.5, 0.5},
     [TetrisItemCategory.CONTAINER] = {0.65, 0.6, 0.4},
     [TetrisItemCategory.HEALING] = {0.1, 0.95, 1},
@@ -68,7 +67,7 @@ local function determineContainerHoverColor(draggedStack, hoveredStack, dragInv,
     if draggedItem and containerItem and containerItem:IsInventoryContainer() then
         local container = containerItem:getInventory()
         local gridContainer = ItemContainerGrid.CreateTemp(container, playerNum)
-        if gridContainer:canAddItem(draggedItem) and container:hasRoomFor(getSpecificPlayer(playerNum), draggedItem) then
+        if gridContainer:canAddItem(draggedItem) then
             return unpack(containerItemHoverColor)
         end
     end
@@ -344,9 +343,8 @@ function ItemGridUI:renderDragItemPreview()
             gridX, gridY = self.selectedX, self.selectedY
         end
 
-        local canPlace = self.grid:doesItemFit(item, gridX, gridY, isRotated)
-        canPlace = canPlace and self.containerGrid:isItemAllowed(item) 
-        canPlace = canPlace and (self.grid.inventory == item:getContainer() or not self.grid.containerDefinition.isFragile or self.grid.inventory:hasRoomFor(getSpecificPlayer(0), item))
+        local isSameInv = self.grid.inventory == item:getContainer()
+        local canPlace = self.grid:doesItemFit(item, gridX, gridY, isRotated) and (isSameInv or self.containerGrid:isItemAllowed(item))
 
         if canPlace then
             self:_renderPlacementPreview(gridX, gridY, itemW, itemH, 0, 1, 0)
@@ -416,6 +414,16 @@ function ItemGridUI.getItemColor(item, limit)
     return r,g,b
 end
 
+---comment
+---@param drawingContext any
+---@param playerObj any
+---@param stack any
+---@param item InventoryItem
+---@param x any
+---@param y any
+---@param alphaMult any
+---@param force1x1 any
+---@param isBuried any
 function ItemGridUI._renderGridStack(drawingContext, playerObj, stack, item, x, y, alphaMult, force1x1, isBuried)
     ItemGridUI._renderGridItem(drawingContext, playerObj, item, stack, x, y, stack.isRotated, alphaMult, force1x1, isBuried)
     if stack.count > 1 then
@@ -427,14 +435,23 @@ function ItemGridUI._renderGridStack(drawingContext, playerObj, stack, item, x, 
         local text = tostring(item:getCurrentAmmoCount())
         ItemGridUI._drawTextOnBottomRight(drawingContext, text, item, x, y, stack.isRotated, alphaMult, force1x1)
     elseif item:IsFood() then
+        ---@cast item Food
         local percent = item:getHungerChange() / item:getBaseHunger()
         if percent < 1.0 then
             ItemGridUI._drawVerticalBar(drawingContext, percent, item, x, y, stack.isRotated, alphaMult, force1x1)
         end
     elseif item:IsDrainable() then
-        local percent = item:getUseDelta()
+        ---@cast item DrainableComboItem
+        local percent = item:getCurrentUses() / item:getMaxUses()
         if percent < 1.0 then
             ItemGridUI._drawVerticalBar(drawingContext, percent, item, x, y, stack.isRotated, alphaMult, force1x1)
+        end
+    elseif item:getFluidContainer() then
+        local fluidContainer = item:getFluidContainer()
+        local percent = fluidContainer:getAmount() / fluidContainer:getCapacity()
+        if percent > 0 then
+            local color = fluidContainer:getColor()
+            ItemGridUI._drawVerticalBarWithColor(drawingContext, percent, item, x, y, stack.isRotated, alphaMult, force1x1, color:getAlpha(), color:getR(), color:getG(), color:getB())
         end
     elseif stack.category == TetrisItemCategory.CONTAINER then
         if TetrisItemData.isSquished(item) then
@@ -522,9 +539,29 @@ function ItemGridUI._drawVerticalBar(drawingContext, percent, item, x, y, isRota
     drawingContext:drawRect(x, top + missing, 2, bottom - top - missing, alphaMult*a,r,g,b)
 end
 
+function ItemGridUI._drawVerticalBarWithColor(drawingContext, percent, item, x, y, isRotated, alphaMult, force1x1, a,r,g,b)
+    local font = UIFont.Small
+
+    local w,h = 1,1
+    if not force1x1 then
+        w,h = TetrisItemData.getItemSize(item, isRotated)
+    end
+
+    x = x + OPT.CELL_SIZE*w - w - 3
+    local top = y + 1
+    local bottom = y + OPT.CELL_SIZE*h - h+1
+    local missing = (bottom - top) * (1.0 - percent)
+
+    local isDark = r + g + b < 0.6
+    local bgCol = isDark and 1 or 0.1
+
+    drawingContext:drawRect(x, top, 3, bottom - top - 1, alphaMult*0.5,bgCol,bgCol,bgCol)
+    drawingContext:drawRect(x+1, top + missing, 2, bottom - top - missing, alphaMult*a,r,g,b)
+end
+
 -- A bit finnicky, the changes are not permanent and reset shortly after.
 -- Seems to work fine during grid rendering in its current state.
-local function SetTextureParameters(texture)
+function ItemGridUI.setTextureAsCrunchy(texture)
     local TEXTURE_2D = 3553
 
     -- Fixes blurry textures from other mods
@@ -588,10 +625,10 @@ function ItemGridUI._renderGridItem(drawingContext, playerObj, item, stack, x, y
         local xInset = (minDimension*TEXTURE_SIZE - width) / 2
         local yInset = (minDimension*TEXTURE_SIZE - height) / 2
 
-        SetTextureParameters(texture)
+        ItemGridUI.setTextureAsCrunchy(texture)
         ItemGridUI._drawTextureRotated(drawingContext, texture, x2 + xInset, y2 + yInset, width, height, alphaMult, r, g, b)
     else
-        SetTextureParameters(texture)
+        ItemGridUI.setTextureAsCrunchy(texture)
         drawingContext:drawTextureScaledUniform(texture, x2, y2, targetScale * correctiveScale, alphaMult, r, g, b);
     end
 

@@ -31,8 +31,10 @@ Events.OnGameBoot.Add(function()
             local srcRoot = getOutermostContainer(srcContainer)
             local destRoot = getOutermostContainer(destContainer)
 
+            local destDef = TetrisContainerData.getContainerDefinition(destContainer)
+
             local isInInventory = inv == srcRoot and inv == destRoot
-            local isDroppingToFloor = inv == srcRoot and destContainer:getType() == "floor"
+            local isDroppingToFloor = inv == srcRoot and destDef.trueType == "floor"
             o.stopOnWalk = not (isInInventory or isDroppingToFloor)
 
             o.isDroppingToFloor = isDroppingToFloor
@@ -82,13 +84,44 @@ Events.OnGameBoot.Add(function()
         return tetrisCanMerge
     end
 
+  
+
+    -- Temp overrides instanceof to ensure instanceof never reports a Moveable as such
+    -- At what point should I just dirty patch a method instead... this is kinda gross
+    local function moveablesArentRealScope(callback, ...)
+        local real_instanceof = instanceof
+        local fake_instanceof = function(obj, class)
+            if class == "Moveable" then return false end
+            return real_instanceof(obj, class)
+        end
+
+        instanceof = fake_instanceof
+        local results = {pcall(callback, ...)}
+        instanceof = real_instanceof
+
+        if results[1] then
+            return unpack(results, 2)
+        else
+            error(results[2])
+        end
+    end
+
     local og_isValid = ISInventoryTransferAction.isValid
     function ISInventoryTransferAction:isValid()
-        local valid = og_isValid(self)
+        local destDef = TetrisContainerData.getContainerDefinition(self.destContainer)
+        local destType = destDef.trueType
+
+        local valid;
+        -- If we are moving a Moveable to anywhere but the floor, ensure it does NOT appear to be a Moveable
+        if destType ~= "floor" and instanceof(self.item, "Moveable") then
+            valid = moveablesArentRealScope(og_isValid, self)
+        else
+            valid = og_isValid(self)
+        end
+
         if not valid or not self.enforceTetrisRules then
             return valid
         end
-
         return self:validateTetrisRules()
     end
 
@@ -115,7 +148,7 @@ Events.OnGameBoot.Add(function()
             end
         end
 
-        if self.destContainer:getType() == "floor" then
+        if containerGrid.isFloor then
             return true
         else
             return containerGrid:canAddItem(self.item)
@@ -183,9 +216,8 @@ Events.OnGameBoot.Add(function()
             if self.gridX and self.gridY and self.gridIndex then
                 destContainerGrid:insertItem(item, self.gridX, self.gridY, self.gridIndex, self.isRotated, self.tetrisSecondary)
             else
-                local organized = self.character:HasTrait("Organized")
                 local disorganized = self.character:HasTrait("Disorganized")
-                destContainerGrid:attemptToInsertItem(item, self.isRotated, organized, disorganized)
+                destContainerGrid:attemptToInsertItem(item, self.isRotated, disorganized)
             end
 
             -- Handle squishable items changing size
@@ -199,7 +231,7 @@ Events.OnGameBoot.Add(function()
                         local stack, grid = parentContainerGrid:findStackByItem(itemContainer)
                         parentContainerGrid:removeItem(itemContainer)
                         if not stack or (grid and not parentContainerGrid:insertItem(itemContainer, stack.x, stack.y, grid.gridIndex, stack.isRotated, grid.secondaryTarget)) then
-                            parentContainerGrid:attemptToInsertItem(itemContainer, self.isRotated, true, false)
+                            parentContainerGrid:attemptToInsertItem(itemContainer, self.isRotated, false)
                         end
                         parentInventory:setDrawDirty(true)
                     end

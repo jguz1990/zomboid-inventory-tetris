@@ -10,6 +10,7 @@ local PHYSICS_DELAY = 600
 ---@field containerDefinition ContainerGridDefinition
 ---@field isPlayerInventory boolean
 ---@field isOnPlayer boolean
+---@field isFloor boolean
 ---@field grids ItemGrid[]
 ---@field overflow ItemStack[]
 ---@field secondaryGrids table
@@ -31,9 +32,10 @@ function ItemContainerGrid:new(inventory, playerNum, definitionOverride)
     o.containerDefinition = definitionOverride or TetrisContainerData.getContainerDefinition(inventory)
     o.isPlayerInventory = inventory == getSpecificPlayer(playerNum):getInventory()
     o.isOnPlayer = o.isPlayerInventory or (inventory:getContainingItem() and inventory:getContainingItem():isInPlayerInventory())
+    o.isFloor = o.containerDefinition.trueType == "floor"
     o.grids = o:createGrids(inventory)
     o.overflow = {}
-    
+
     o.secondaryGrids = {}
     o._onSecondaryGridsAdded = {}
     o._onSecondaryGridsRemoved = {}
@@ -86,7 +88,6 @@ local function searchInventoryPageForContainerGrid(invPage, targetInventory)
 end
 
 
--- TODO: Rename this to GetOrCreate, as it's not guaranteed to create a new container grid
 ---@return ItemContainerGrid
 function ItemContainerGrid.GetOrCreate(inventory, playerNum, containerDefOverride)
     if not containerDefOverride then
@@ -180,7 +181,7 @@ function ItemContainerGrid:createGrids(container)
 end
 
 function ItemContainerGrid:createSecondaryGrids(target)
-    local containerDef = TetrisContainerData.getPocketDefinition(target)
+    local containerDef = TetrisPocketData.getPocketDefinition(target)
     local grids = {}
     if not containerDef then
         return grids
@@ -191,10 +192,6 @@ function ItemContainerGrid:createSecondaryGrids(target)
         grids[index] = grid
     end
     return grids
-end
-
-function ItemContainerGrid:isOrganized()
-    return self.containerDefinition.isOrganized
 end
 
 --- Check if any grids are unsearched
@@ -278,8 +275,7 @@ function ItemContainerGrid:doesItemFitAnywhere(item, w, h, ignoreItems)
     return false
 end
 
-function ItemContainerGrid:_getCapacity()
-    local player = getSpecificPlayer(self.playerNum)
+function ItemContainerGrid:_getCapacity(player)
     local hasOrganizedTrait = player:HasTrait("Organized")
     local hasDisorganizedTrait = player:HasTrait("Disorganized")
 
@@ -293,19 +289,53 @@ function ItemContainerGrid:_getCapacity()
     return capacity
 end
 
+---@param item InventoryItem
+---@param container ItemContainer
+---@param playerObj IsoPlayer
+---@return boolean
+function ItemContainerGrid:validateCapacityRestrictions(item, container, playerObj)
+    if item:getContainer() == container then
+        return true
+    end
+
+    if SandboxVars.InventoryTetris.EnforceCarryWeight then
+        local capacity = self:_getCapacity(playerObj)
+        if item:getUnequippedWeight() + container:getCapacityWeight() > capacity then
+            return false
+        end
+
+        local containerItem = container:getContainingItem()
+        if containerItem and containerItem:IsInventoryContainer() then
+            ---@cast containerItem InventoryContainer
+            local maxItemSize = containerItem:getMaxItemSize()
+            if maxItemSize > 0 and maxItemSize < item:getUnequippedWeight() then
+                return false
+            end
+        end
+    end
+
+    return true
+end
+
 ---@return boolean
 function ItemContainerGrid:isItemAllowed(item)
-    return self:_validateOnlyAcceptCategory(item)
+    if self.inventory:getOnlyAcceptCategory() then
+        if item:getCategory() ~= self.inventory:getOnlyAcceptCategory() then
+            return false
+        end
+    end
+
+    local player = getSpecificPlayer(self.playerNum)
+    if not self:validateCapacityRestrictions(item, self.inventory, player) then
+        return false
+    end
+
+    return TetrisContainerData.validateInsert(self.inventory, self.containerDefinition, item)
 end
 
 ---@return boolean
 function ItemContainerGrid:canAddItem(item)
-    if not self:_validateOnlyAcceptCategory(item) then
-        return false
-    end
-
-    local capacity = self:_getCapacity()
-    if self.containerDefinition.isFragile and item:getContainer() ~= self.inventory and capacity < item:getActualWeight() + self.inventory:getCapacityWeight() then
+    if not self:isItemAllowed(item) then
         return false
     end
 
@@ -326,18 +356,9 @@ function ItemContainerGrid:canAddItem(item)
     return false
 end
 
-function ItemContainerGrid:_validateOnlyAcceptCategory(item)
-    if self.inventory:getOnlyAcceptCategory() then
-        if item:getCategory() ~= self.inventory:getOnlyAcceptCategory() then
-            return false
-        end
-    end
-
-    return TetrisContainerData.validateInsert(self.inventory, self.containerDefinition, item)
-end
 
 function ItemContainerGrid:refresh()
-    local doPhysics = SandboxVars.InventoryTetris.EnableGravity and self:shouldDoPhysics()  
+    local doPhysics = SandboxVars.InventoryTetris.EnableGravity and self:shouldDoPhysics()
     for _, grid in ipairs(self.grids) do
         grid:refresh(doPhysics)
     end
@@ -369,15 +390,15 @@ function ItemContainerGrid:shouldDoPhysics()
     return getTimestampMs() - self.lastPhysics >= PHYSICS_DELAY
 end
 
-function ItemContainerGrid:attemptToInsertItem(item, preferRotated, isOrganized, isDisoraganized)
+function ItemContainerGrid:attemptToInsertItem(item, preferRotated, isDisoraganized)
     for _, grid in ipairs(self.grids) do
-        if grid:_attemptToInsertItem(item, preferRotated, isOrganized, isDisoraganized) then
+        if grid:_attemptToInsertItem(item, preferRotated, isDisoraganized) then
             return true
         end
     end
     for _, grids in pairs(self.secondaryGrids) do
         for _, grid in ipairs(grids) do
-            if grid:_attemptToInsertItem(item, preferRotated, isOrganized, isDisoraganized) then
+            if grid:_attemptToInsertItem(item, preferRotated, isDisoraganized) then
                 return true
             end
         end
@@ -409,7 +430,7 @@ function ItemContainerGrid:removeItem(item)
     return false
 end
 
-function ItemContainerGrid:autoPositionItem(item, isOrganized, isDisorganized)
+function ItemContainerGrid:autoPositionItem(item, isDisorganized)
     for _, grid in ipairs(self.grids) do
         if grid:removeItem(item) then
             print("ohno")
@@ -424,13 +445,13 @@ function ItemContainerGrid:autoPositionItem(item, isOrganized, isDisorganized)
     end
 
     for _, grid in ipairs(self.grids) do
-        if grid:_attemptToInsertItem(item, false, isOrganized, isDisorganized) then
+        if grid:_attemptToInsertItem(item, false, isDisorganized) then
             return true
         end
     end
     for _, grids in pairs(self.secondaryGrids) do
         for _, grid in ipairs(grids) do
-            if grid:_attemptToInsertItem(item, false, isOrganized, isDisorganized) then
+            if grid:_attemptToInsertItem(item, false, isDisorganized) then
                 return true
             end
         end
@@ -477,17 +498,16 @@ function ItemContainerGrid:_updateGridPositions()
     self.overflow = {}
     local unpositionedItems = self:_getUnpositionedItems()
 
-    local isOrganized = false
     local isDisorganized = false
     if self.isOnPlayer then
         local player = getSpecificPlayer(self.playerNum)
-        isOrganized = player:HasTrait("Organized")
         isDisorganized = player:HasTrait("Disorganized")
     end
 
     -- Sort the unpositioned items by size, so we can place the biggest ones first
     table.sort(unpositionedItems, function(a, b) return a.size < b.size end)
 
+    ---@type ItemGrid[]
     local allGrids = {}
     for _, grid in ipairs(self.grids) do
         allGrids[#allGrids+1] = grid
@@ -513,7 +533,7 @@ function ItemContainerGrid:_updateGridPositions()
                 gridIndex = 1
             end
 
-            if grid:_acceptUnpositionedItem(item.item, isOrganized, isDisorganized) then
+            if grid:_acceptUnpositionedItem(item.item, isDisorganized) then
                 placedItem = true
                 break
             end
@@ -609,7 +629,7 @@ function ItemContainerGrid:_getPositionedItems()
 end
 
 function ItemContainerGrid:_isItemValid(item)
-    return not item:isHidden() and not item:isEquipped() and not self:_isItemInHotbar(item)
+    return not item:isHidden() and (not self.isPlayerInventory or (not item:isEquipped() and not self:_isItemInHotbar(item)))
 end
 
 function ItemContainerGrid:_isItemInHotbar(item)
@@ -631,15 +651,33 @@ function ItemContainerGrid:refreshSecondaryGrids(forceFull)
 
     local items = self:getWornItemsWithPockets()
 
+    local displacedStacks = {}
     for target, _ in pairs(self.secondaryGrids) do
         if not items[target] or forceFull then
-            self:removeSecondaryGrid(target)
+            local stacks = self:removeSecondaryGrid(target)
+            table.insert(displacedStacks, stacks)
         end
     end
 
+    local insertedGrids = {}
     for item, _ in pairs(items) do
         if not self.secondaryGrids[item] then
-            self:addSecondaryGrid(item)
+            local grids = self:addSecondaryGrid(item)
+            table.insert(insertedGrids, grids)
+        end
+    end
+
+    -- If the clothing change was a 1-to-1 swap, try to move the stacks directly to the new grid
+    if #displacedStacks == 1 and #insertedGrids == 1 then
+        local displacedStacks = displacedStacks[1]
+        local insertedGrids = insertedGrids[1]
+
+        for _, stack in ipairs(displacedStacks) do
+            local grid = insertedGrids[stack.gridIndex]
+            if grid then
+                stack.gridIndex = nil
+                grid:_tryInsertStack_premade(stack, stack.x, stack.y, stack.isRotated)
+            end
         end
     end
 end
@@ -659,7 +697,7 @@ function ItemContainerGrid:getWornItemsWithPockets()
 end
 
 function ItemContainerGrid:_hasPockets(item)
-    return not item:isHidden() and TetrisContainerData.getPocketDefinition(item) ~= nil
+    return not item:isHidden() and TetrisPocketData.getPocketDefinition(item) ~= nil
 end
 
 function ItemContainerGrid:addOnSecondaryGridsAdded(obj, callback)
@@ -684,11 +722,19 @@ function ItemContainerGrid:addSecondaryGrid(secondaryTarget)
     for obj, callback in pairs(self._onSecondaryGridsAdded) do
         callback(obj, secondaryTarget, grids)
     end
+    return grids
 end
 
 function ItemContainerGrid:removeSecondaryGrid(secondaryTarget)
+    local stacks = {}
+    
     local grids = self.secondaryGrids[secondaryTarget]
     for _, grid in ipairs(grids) do
+        local gridStacks = grid:getStacks()
+        for _, stack in ipairs(gridStacks) do
+            stack.gridIndex = grid.gridIndex
+            table.insert(stacks, stack)
+        end
         grid:deleteGridData()
     end
 
@@ -696,6 +742,8 @@ function ItemContainerGrid:removeSecondaryGrid(secondaryTarget)
     for obj, callback in pairs(self._onSecondaryGridsRemoved) do
         callback(obj, secondaryTarget)
     end
+
+    return stacks
 end
 
 -- Keep the player's main inventory grid refreshed, so it drops unpositioned items even if the ui isn't open

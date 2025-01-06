@@ -4,6 +4,17 @@ local OPT = require("InventoryTetris/Settings")
 local JSON = require("InventoryTetris/Dev/JSON.lua")
 local ContextUtil = require("Notloc/ContextUtil")
 
+local function copyTable(from, to)
+    for k,v in pairs(from) do
+        if type(v) == "table" then
+            to[k] = {}
+            copyTable(v, to[k])
+        else
+            to[k] = v
+        end
+    end
+end
+
 local function readJsonFile(fileName)
     local reader = getFileReader(fileName, false);
     if reader then
@@ -107,6 +118,80 @@ function TetrisDevTool.insertDebugOptions(context, item)
     if item:IsClothing() then
         subMenu:addOption("Edit Pocket Data", item, TetrisDevTool.openPocketEdit);
     end
+
+    subMenu:addOption("Copy Item Data", item, TetrisDevTool.copyItemData);
+    if TetrisDevTool.clipboard then
+        subMenu:addOption("Paste Item Data", item, TetrisDevTool.pasteItemData);
+    end
+end
+
+function TetrisDevTool.copyItemData(item)
+    local data = TetrisItemData.getItemData_squishState(item, false);
+    local dataSquished = TetrisItemData.getItemData_squishState(item, true)
+    local containerData = nil
+    if item:IsInventoryContainer() then
+        containerData = TetrisContainerData.getContainerDefinition(item:getItemContainer());
+    end
+
+    -- Only copy data that isn't auto calculated
+    if data and data._autoCalculated then
+        data = nil;
+    end
+    if dataSquished and dataSquished._autoCalculated then
+        dataSquished = nil;
+    end
+    if containerData and containerData._autoCalculated then
+        containerData = nil;
+    end
+
+    TetrisDevTool.clipboard = {
+        itemData=data,
+        itemDataSquished=dataSquished,
+        containerData=containerData
+    };
+
+    local check = TetrisDevTool.clipboard
+    return 5
+end
+
+function TetrisDevTool.pasteItemData(item)
+    if not TetrisDevTool.clipboard then
+        return;
+    end
+
+    if TetrisDevTool.clipboard.itemData then
+        local itemData = {}
+        copyTable(TetrisDevTool.clipboard.itemData, itemData);
+
+        local fType = item:getFullType();
+        TetrisDevTool.itemEdits[fType] = itemData;
+        writeJsonFile(ITEM_FILENAME..".json", TetrisDevTool.itemEdits);
+    end
+
+    if TetrisDevTool.clipboard.itemDataSquished then
+        local itemDataSquished = {}
+        copyTable(TetrisDevTool.clipboard.itemDataSquished, itemDataSquished);
+
+        local fType = TetrisItemData.getSquishedFullType(item);
+        TetrisDevTool.itemEdits[fType] = itemDataSquished;
+        writeJsonFile(ITEM_FILENAME..".json", TetrisDevTool.itemEdits);
+    end
+
+    if item:IsInventoryContainer() then
+        if TetrisDevTool.clipboard.containerData then
+            local containerData = {}
+            copyTable(TetrisDevTool.clipboard.containerData, containerData);
+
+            local key = TetrisContainerData._getContainerKey(item:getItemContainer());
+            TetrisDevTool.containerEdits[key] = containerData;
+            writeJsonFile(CONTAINER_FILENAME..".json", TetrisDevTool.containerEdits);
+
+            local itemDef = TetrisItemData._getItemData(item);
+            if itemDef._autoCalculated then
+                TetrisDevTool.recalculateItemData(item);
+            end
+        end
+    end
 end
 
 ---@param context ISContextMenu
@@ -197,8 +282,7 @@ function TetrisDevTool.openEditItem(item)
             editWindow:addChild(squishableTitle);
 
             -- Squishable toggle button
-            local isSquished = TetrisItemData.isSquished(item);
-            local squishableButton = ISButton:new(230, 90, 100, 20, isSquished and "True" or "False", editWindow);
+            local squishableButton = ISButton:new(230, 90, 100, 20, "False", editWindow);
             squishableButton:initialise();
             squishableButton:instantiate();
             squishableButton:setAnchorLeft(false);
@@ -211,7 +295,7 @@ function TetrisDevTool.openEditItem(item)
 
     editWindow.maxStackInput = maxStackInput;
     editWindow.item = item;
-    editWindow.squished = TetrisItemData.isSquished(item);
+    editWindow.squished = false;
 
     local okButton = ISButton:new(10, 75, 100, 20, "Save", editWindow);
     okButton:setOnClick(TetrisDevTool.onEditItem, okButton);
@@ -342,18 +426,6 @@ function TetrisDevTool.applyEdits(item, x, y, maxStack, squished)
     TetrisDevTool.itemEdits[fType] = newData;
 
     writeJsonFile(ITEM_FILENAME..".json", TetrisDevTool.itemEdits);
-end
-
-
-local function copyTable(from, to)
-    for k,v in pairs(from) do
-        if type(v) == "table" then
-            to[k] = {}
-            copyTable(v, to[k])
-        else
-            to[k] = v
-        end
-    end
 end
 
 function TetrisDevTool.getGridXYFromHandle(handle)
@@ -493,7 +565,7 @@ end
 function TetrisDevTool.openPocketEdit(item)
     local inventory = getSpecificPlayer(0):getInventory();
     local inventoryPane = getPlayerData(0).playerInventory.inventoryPane;
-    local containerDef = TetrisContainerData.getPocketDefinition(item);
+    local containerDef = TetrisPocketData.getPocketDefinition(item);
     if not containerDef then
         containerDef = {
             gridDefinitions = {
@@ -587,21 +659,6 @@ function TetrisDevTool.openContainerGridEditor(inventory, inventoryPane, contain
     alignmentButton:setOnClick(TetrisDevTool.onEditContainer, alignmentButton);
     editWindow:addChild(alignmentButton);
     editWindow.alignmentButton = alignmentButton;
-
-    -- Organized Title
-    local organizedTitle = ISLabel:new(10, 65, 16, " Is Organized:", 1, 1, 1, 1, UIFont.Small, true);
-    organizedTitle:initialise();
-    organizedTitle:instantiate();
-    editWindow:addChild(organizedTitle);
-
-    -- Organized toggle button
-    local isOrganized = editWindow.newContainerDefinition.isOrganized;
-    local organizedButton = ISButton:new(10, 82, 100, 16, isOrganized and "True" or "False", editWindow);
-    organizedButton:initialise();
-    organizedButton:instantiate();
-    organizedButton.internal = "ORGANIZED";
-    organizedButton:setOnClick(TetrisDevTool.onEditContainer, organizedButton);
-    editWindow:addChild(organizedButton);
 
     -- Fragile Title
     local fragileTitle = ISLabel:new(10, 105, 16, "Is Fragile:", 1, 1, 1, 1, UIFont.Small, true);
@@ -859,11 +916,6 @@ function TetrisDevTool.onEditContainer(self, button)
         button:setTitle(self.newContainerDefinition.centerMode == "horizontal" and "Horizontal" or "Vertical");
     end
 
-    if button.internal == "ORGANIZED" then
-        self.newContainerDefinition.isOrganized = not self.newContainerDefinition.isOrganized;
-        button:setTitle(self.newContainerDefinition.isOrganized and "True" or "False");
-    end
-
     if button.internal == "FRAGILE" then
         self.newContainerDefinition.isFragile = not self.newContainerDefinition.isFragile;
         button:setTitle(self.newContainerDefinition.isFragile and "True" or "False");
@@ -876,7 +928,7 @@ function TetrisDevTool.onEditContainer(self, button)
 
     if button.internal == "ACCEPT" then
         if self.type == "CONTAINER" then
-            TetrisDevTool.applyContainerEdit(self.containerDataKey, self.newContainerDefinition);
+            TetrisDevTool.applyContainerEdit(self.containerDataKey, self.newContainerDefinition, self.inventory);
         else
             TetrisDevTool.applyPocketEdit(self.containerDataKey, self.newContainerDefinition);
         end
@@ -1125,11 +1177,20 @@ function TetrisDevTool.createDragHandle(uiElement, pixelIncrement, onReleaseCall
 end
 
 
-function TetrisDevTool.applyContainerEdit(key, newDef)
+function TetrisDevTool.applyContainerEdit(key, newDef, container)
     newDef._autoCalculated = nil; -- Avoid saving this value
     newDef.invalidCategories = nil;
     TetrisDevTool.containerEdits[key] = newDef;
     writeJsonFile(CONTAINER_FILENAME..".json", TetrisDevTool.containerEdits);
+
+    ---@cast container ItemContainer
+    local item = container:getContainingItem();
+    if item then
+        local itemDef = TetrisItemData._getItemData(item);
+        if itemDef._autoCalculated then
+            TetrisDevTool.recalculateItemData(item);
+        end
+    end
 
     TetrisDevTool.forceRefreshAllGrids();
 end
@@ -1154,10 +1215,8 @@ function TetrisDevTool._exportDataPack()
     local items = FormattedLuaWriter.formatLocalVariable("itemPack", TetrisDevTool.itemEdits, 1);
     local containers = FormattedLuaWriter.formatLocalVariable("containerPack", TetrisDevTool.containerEdits, 1);
 
-    local text =   'require("InventoryTetris/TetrisItemData");\r\n'
-    text = text .. 'require("InventoryTetris/TetrisContainerData");\r\n'
-    text = text .. '\r\n'
-    text = text .. 'Events.OnGameBoot.Add(function() \r\n'
+    local text =   'Events.OnGameBoot.Add(function() \r\n'
+    text = text .. '\t' .. 'if not TetrisItemData then return end\r\n'
     text = text .. items
     text = text .. '\r\n'
     text = text .. containers
@@ -1248,8 +1307,8 @@ if not TetrisDevTool.og_createMenu then
             end
 
             if item:IsDrainable() then
-                print("item use delta: " .. item:getUseDelta())
-                print("item used delta: " .. item:getUsedDelta())
+                print("item uses: " .. item:getCurrentUses())
+                print("item max uses: " .. item:getMaxUses())
             end
 
             local mediaData = item:getMediaData()
@@ -1277,4 +1336,15 @@ if not TetrisDevTool.og_createMenu then
 
         return menu
     end
+end
+
+function TetrisDevTool.extractWorldContainers(containerDefs)
+    for key, containerDef in pairs(containerDefs) do
+        -- if key starts with a lowercase letter, it's a world container
+        if string.match(key, "^[a-z]") then
+            TetrisDevTool.containerEdits[key] = containerDef
+        end
+    end
+
+    writeJsonFile(CONTAINER_FILENAME..".json", TetrisDevTool.containerEdits);
 end

@@ -13,7 +13,12 @@
 ---@field isFloor boolean
 ---@field width number
 ---@field height number
+---@field gridKey string
+---@field isProxInv boolean
+---@field isCorpse boolean
 ItemGrid = {}
+
+local PROX_INV_TYPE = "proxInv"
 
 ---@param containerGrid ItemContainerGrid
 ---@param gridIndex number
@@ -37,12 +42,14 @@ function ItemGrid:new(containerGrid, gridIndex, inventory, containerDefinition, 
     o.secondaryTarget = secondaryTarget
 
     o.isOnPlayer = o.isPlayerInventory or (inventory:getContainingItem() and inventory:getContainingItem():isInPlayerInventory())
-    o.isFloor = inventory:getType() == "floor"
+    o.isFloor = containerDefinition.trueType == "floor"
 
     o.width = o.gridDefinition.size.width + SandboxVars.InventoryTetris.BonusGridSize
     o.height = o.gridDefinition.size.height + SandboxVars.InventoryTetris.BonusGridSize
 
     o.gridKey = gridIndex .. (secondaryTarget and tostring(secondaryTarget) or "")
+    o.isProxInv = containerDefinition.trueType == PROX_INV_TYPE
+    o.isCorpse = instanceof(o.inventory:getParent(), "IsoDeadBody")
 
     o:refresh()
     return o
@@ -96,7 +103,7 @@ function ItemGrid:insertItem(item, xPos, yPos, isRotated)
     if item:getContainer() ~= self.inventory then
         return false
     end
-    if not TetrisContainerData.validateInsert(self.inventory, self.containerDefinition, item) then
+    if not self.isProxInv and not TetrisContainerData.validateInsert(self.inventory, self.containerDefinition, item) then
         return false
     end
 
@@ -197,6 +204,18 @@ function ItemGrid:_insertStack(xPos, yPos, item, isRotated)
     self:_sendModData()
 end
 
+function ItemGrid:_tryInsertStack_premade(stack, x, y, isRotated)
+    local item = ItemStack.getFrontItem(stack, self.inventory)
+    local w, h = TetrisItemData.getItemSize(item, isRotated)
+    if not self:_isAreaFree(x, y, w, h, {[stack] = true}) then
+        return false
+    end
+
+    self:_removeStack(stack)
+    self:_insertStack_premade(stack, x, y, isRotated)
+    return true
+end
+
 function ItemGrid:_insertStack_premade(stack, x, y, isRotated)
     stack.x = x
     stack.y = y
@@ -245,7 +264,7 @@ function ItemGrid:_isItemInBounds(item, stack)
 end
 
 function ItemGrid:canAddItem(item, isRotated)
-    if self.inventory:getType() == "floor" then
+    if self.isFloor then
         return true;
     end
 
@@ -337,16 +356,12 @@ function ItemGrid:_attemptToStackItem(item)
     return false
 end
 
-function ItemGrid:_attemptToInsertItem(item, preferRotated, isOrganized, isDisorganized)
-    if not TetrisContainerData.validateInsert(self.inventory, self.containerDefinition, item) then
+function ItemGrid:_attemptToInsertItem(item, preferRotated, isDisorganized)
+    if not self.isProxInv and not TetrisContainerData.validateInsert(self.inventory, self.containerDefinition, item) then
         return false
     end
 
     preferRotated = preferRotated or false
-
-    if not isOrganized then
-        isOrganized = self.containerGrid:isOrganized()
-    end
 
     if not isDisorganized or TetrisItemData.isAlwaysStacks(item) then
         if self:_attemptToStackItem(item) then
@@ -358,16 +373,12 @@ function ItemGrid:_attemptToInsertItem(item, preferRotated, isOrganized, isDisor
         return false
     end
 
-    if not isOrganized then
+    if isDisorganized then
         preferRotated = ZombRand(0, 2) == 0
     end
 
     local w, h = TetrisItemData.getItemSize(item, preferRotated)
-    if w == h then
-        preferRotated = false
-    end
-
-    local useShuffle = not isOrganized
+    local useShuffle = isDisorganized
     if self:_attemptToInsertItem_outerLoop(item, w, h, preferRotated, useShuffle) then
         return true
     end
@@ -579,8 +590,8 @@ function ItemGrid:isStackBuried(stack)
 end
 
 -- TODO: Either remove this method or make it batch several items at once with minimal checks
-function ItemGrid:_acceptUnpositionedItem(item, isOrganized, isDisorganized)    
-    return self:_attemptToInsertItem(item, false, isOrganized, isDisorganized)
+function ItemGrid:_acceptUnpositionedItem(item, isDisorganized)
+    return self:_attemptToInsertItem(item, false, isDisorganized)
 end
 
 function ItemGrid:isEmpty()
@@ -599,8 +610,16 @@ ItemGrid._searchSessions = {}
 -- Didn't foresee the community modding in custom containers with so many grids, but I like the enthusiasm (used to be 10)
 ItemGrid.SESSION_MEMORY_LIMIT = 100
 
+local DISABLE_BODY_SEARCH = 1
+local SOME_BODY_SEARCH = 2
+local ENABLE_BODY_SEARCH = 3
+
 function ItemGrid:isUnsearched(playerNum)
     if not SandboxVars.InventoryTetris.EnableSearch then
+        return false
+    end
+
+    if self.isCorpse and SandboxVars.InventoryTetris.SearchBodies == DISABLE_BODY_SEARCH then
         return false
     end
 
@@ -623,6 +642,9 @@ function ItemGrid._getSearchSession(playerNum, grid)
     end
 
     if not ItemGrid._searchSessions[playerNum][grid.inventory] then
+        if grid.isCorpse and SandboxVars.InventoryTetris.SearchBodies == SOME_BODY_SEARCH then
+            return ItemGrid._createAndCacheSession(playerNum, grid)
+        end
         return nil
     end
 
@@ -635,6 +657,20 @@ function ItemGrid._getOrCreateSearchSession(playerNum, grid)
         return existingSession
     end
 
+    return ItemGrid._createAndCacheSession(playerNum, grid)
+end
+
+function ItemGrid._findAllEquippedItems(grid, session)
+    local stacks = grid:getStacks()
+    for _, stack in ipairs(stacks) do
+        local item = ItemStack.getFrontItem(stack, grid.inventory)
+        if item and item:isEquipped() then
+            session.searchedStackIDs[item:getID()] = true
+        end
+    end
+end
+
+function ItemGrid._createAndCacheSession(playerNum, grid)
     local sessions = ItemGrid._searchSessions[playerNum]
     if not sessions[grid.inventory] then
         sessions[grid.inventory] = {}
@@ -659,6 +695,12 @@ function ItemGrid._createSearchSession(grid)
     session.isGridRevealed = false
     session.searchedStackIDs = {}
     session.progressTicks = 0
+
+    if grid.isCorpse and SandboxVars.InventoryTetris.SearchBodies == SOME_BODY_SEARCH then
+        session.isGridRevealed = true
+        ItemGrid._findAllEquippedItems(grid, session)
+    end
+
     return session
 end
 
@@ -788,9 +830,9 @@ function ItemGrid:_getSavedContainerData()
         modData.gridContainers = {}
     end
 
-    local invType = self.secondaryTarget and self.secondaryTarget:getID() or self.inventory:getType()
+    local invType = self.secondaryTarget and self.secondaryTarget:getID() or self.containerDefinition.trueType
     if not modData.gridContainers[invType] then
-        modData.gridContainers[invType] = {}
+        modData.gridContainers[invType] = { stacks = {} }
     end
 
     return modData.gridContainers[invType], parent
@@ -805,11 +847,11 @@ function ItemGrid:_getParentModData()
         return player:getModData(), player
     end
 
-    if self.inventory:getType() == "floor" then
+    if self.isFloor then
         return ItemGrid._floorModData, nil
     end
 
-    if self.inventory:getType() == "local" then
+    if self.isProxInv then
         return ItemGrid._proxData, nil
     end
 
