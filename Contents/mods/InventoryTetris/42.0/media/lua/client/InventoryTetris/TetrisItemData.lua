@@ -324,22 +324,22 @@ function TetrisItemData._calculateMoveableSize(item)
 end
 
 TetrisItemData._itemClassToSizeCalculation = {
-    [TetrisItemCategory.AMMO] = {x = 1, y = 1},
-    [TetrisItemCategory.BOOK] = {x = 1, y = 2},
+    [TetrisItemCategory.AMMO] = {x = 2, y = 2},
+    [TetrisItemCategory.BOOK] = {x = 4, y = 6},
     [TetrisItemCategory.CLOTHING] = TetrisItemData._calculateItemSizeClothing,
     [TetrisItemCategory.CONTAINER] = TetrisItemData._calculateItemSizeContainer,
     [TetrisItemCategory.ENTERTAINMENT] = TetrisItemData._calculateEntertainmentSize,
     [TetrisItemCategory.DRINK] = TetrisItemData._calculateItemSizeWeightBasedTall,
     [TetrisItemCategory.FOOD] = TetrisItemData._calculateItemSizeWeightBasedTall,
     [TetrisItemCategory.HEALING] = TetrisItemData._calculateItemSizeWeightBased,
-    [TetrisItemCategory.KEY] = {x = 1, y = 1},
+    [TetrisItemCategory.KEY] = {x = 1, y = 2},
     [TetrisItemCategory.MAGAZINE] = TetrisItemData._calculateItemSizeMagazine,
     [TetrisItemCategory.ATTACHMENT] = TetrisItemData._calculateItemSizeWeightBased,
     [TetrisItemCategory.MELEE] = TetrisItemData._calculateMeleeWeaponSize,
     [TetrisItemCategory.MISC] = TetrisItemData._calculateItemSizeWeightBased,
     [TetrisItemCategory.MOVEABLE] = TetrisItemData._calculateMoveableSize,
     [TetrisItemCategory.RANGED] = TetrisItemData._calculateRangedWeaponSize,
-    [TetrisItemCategory.SEED] = {x = 1, y = 1},
+    [TetrisItemCategory.SEED] = {x = 2, y = 2},
 }
 
 function TetrisItemData._calculateItemStackability(item, itemClass)
