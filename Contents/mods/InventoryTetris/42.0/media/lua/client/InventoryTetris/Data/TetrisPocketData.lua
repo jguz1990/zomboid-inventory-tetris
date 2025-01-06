@@ -5,11 +5,11 @@ TetrisPocketData._pocketDefinitions = {}
 local two_pockets = {
     gridDefinitions = {
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=0, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=1, y=0},
         }
     }
@@ -17,19 +17,19 @@ local two_pockets = {
 local four_pockets = {
     gridDefinitions = {
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=0, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=1, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=2, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=3, y=0},
         }
     }
@@ -37,11 +37,11 @@ local four_pockets = {
 local two_big_pockets = {
     gridDefinitions = {
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=0, y=0},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=1, y=0},
         }
     }
@@ -49,7 +49,7 @@ local two_big_pockets = {
 local one_large_pocket = {
     gridDefinitions = {
         {
-            size = {width=4, height=1},
+            size = {width=8, height=2},
             position = {x=0, y=0},
         }
     }
@@ -57,19 +57,19 @@ local one_large_pocket = {
 local two_big_two_small_pockets = {
     gridDefinitions = {
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=0, y=0},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=1, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=2, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=3, y=0},
         }
     }
@@ -77,35 +77,35 @@ local two_big_two_small_pockets = {
 local four_big_four_small_pockets = {
     gridDefinitions = {
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=0, y=0},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=1, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=2, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=3, y=0},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=0, y=1},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=1, y=1},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=2, y=1},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=3, y=1},
         }
     }
@@ -129,19 +129,19 @@ local boiler_suit = {
             position = {x=3, y=0},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=0, y=1},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=1, y=1},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=2, y=1},
         },
         {
-            size = {width=1, height=1},
+            size = {width=2, height=2},
             position = {x=3, y=1},
         }
     }
@@ -149,15 +149,15 @@ local boiler_suit = {
 local ammo_strap = {
     gridDefinitions = {
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=0, y=0},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=1, y=0},
         },
         {
-            size = {width=2, height=1},
+            size = {width=4, height=2},
             position = {x=2, y=0},
         },
     },
