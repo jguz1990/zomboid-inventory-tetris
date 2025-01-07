@@ -53,7 +53,7 @@ local containerPack = {
 			[1] = {
 				["size"] = {
 					["width"] = 10,
-					["height"] = 4,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -63,7 +63,7 @@ local containerPack = {
 			[2] = {
 				["size"] = {
 					["width"] = 10,
-					["height"] = 4,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -73,7 +73,7 @@ local containerPack = {
 			[3] = {
 				["size"] = {
 					["width"] = 10,
-					["height"] = 4,
+					["height"] = 8,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -189,7 +189,7 @@ local containerPack = {
 			[1] = {
 				["size"] = {
 					["width"] = 6,
-					["height"] = 4,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -199,7 +199,7 @@ local containerPack = {
 			[2] = {
 				["size"] = {
 					["width"] = 6,
-					["height"] = 4,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,
@@ -209,7 +209,7 @@ local containerPack = {
 			[3] = {
 				["size"] = {
 					["width"] = 6,
-					["height"] = 4,
+					["height"] = 6,
 				},
 				["position"] = {
 					["x"] = 0,

@@ -285,7 +285,7 @@ end
 
 TetrisItemData._itemClassToSizeCalculation = {
     [TetrisItemCategory.AMMO] = {x = 2, y = 2},
-    [TetrisItemCategory.BOOK] = {x = 4, y = 6},
+    [TetrisItemCategory.BOOK] = {x = 2, y = 4},
     [TetrisItemCategory.CLOTHING] = TetrisItemData._calculateItemSizeClothing,
     [TetrisItemCategory.CONTAINER] = TetrisItemData._calculateItemSizeContainer,
     [TetrisItemCategory.ENTERTAINMENT] = TetrisItemData._calculateEntertainmentSize,
