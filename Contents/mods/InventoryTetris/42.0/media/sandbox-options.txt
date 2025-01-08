@@ -68,11 +68,37 @@ option InventoryTetris.SearchBodies
 
 
 
+
+
+option InventoryTetris.ContainerBaseWidth
+{
+	type = integer, min = 1, max = 120, default = 12,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_ContainerBaseWidth,
+}
+option InventoryTetris.ContainerBaseHeight
+{
+	type = integer, min = 1, max = 120, default = 50,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_ContainerBaseHeight,
+}
+option InventoryTetris.ApplyContainerMult
+{
+	type = boolean, default = false,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_ApplyContainerMult,
+}
 option InventoryTetris.ItemSizeMult
 {
 	type = integer, min = 1, max = 4, default = 1,
 	page = Sandbox_InventoryTetris_SizeMult,
 	translation = Sandbox_InventoryTetris_ItemSizeMult,
+}
+option InventoryTetris.ContainerSizeMult
+{
+	type = float, min = 0.5, max = 4, default = 1,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_ContainerSizeMult,
 }
 
 option InventoryTetris.EnableSizeMultAffectsMagazines
@@ -134,12 +160,4 @@ option InventoryTetris.EnableSizeMultAffectsFood
 	type = boolean, default = true,
 	page = Sandbox_InventoryTetris_SizeMult,
 	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsFood,
-}
-
-
-option InventoryTetris.ContainerSizeMult
-{
-	type = integer, min = 1, max = 4, default = 1,
-	page = Sandbox_InventoryTetris_SizeMult,
-	translation = Sandbox_InventoryTetris_ContainerSizeMult,
 }

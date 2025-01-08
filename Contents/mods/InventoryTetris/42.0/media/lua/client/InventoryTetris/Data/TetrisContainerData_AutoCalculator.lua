@@ -1,7 +1,21 @@
 TetrisContainerData = TetrisContainerData or {}  -- Partial class
 
-local MAX_CONTAINER_WIDTH = 24
-local MAX_CONTAINER_HEIGHT = 100
+local CONTAINER_SIZE_MULT = SandboxVars.InventoryTetris.ContainerSizeMult -- float :>
+
+-- Mod base values kept in new vars if they need to used anywhere
+local DEFAULT_CONTAINER_WIDTH = 12 -- int
+local DEFAULT_CONTAINER_HEIGHT = 50 -- int
+
+-- Enables multiplier for max container sizes
+local CONTAINER_MULT_ACTIVE = SandboxVars.InventoryTetris.ApplyContainerMult -- bool
+
+-- SandboxVar default inherited from original mod's value: 12
+local BASE_CONTAINER_WIDTH = SandboxVars.InventoryTetris.ContainerBaseWidth -- int
+-- SandboxVar default inherited from original mod's value: 50
+local BASE_CONTAINER_HEIGHT = SandboxVars.InventoryTetris.ContainerBaseHeight -- int
+
+local MAX_CONTAINER_WIDTH = math.floor(BASE_CONTAINER_WIDTH * CONTAINER_SIZE_MULT)
+local MAX_CONTAINER_HEIGHT = math.floor(BASE_CONTAINER_HEIGHT * CONTAINER_SIZE_MULT)
 
 function TetrisContainerData._calculateContainerDefinition(container)
     local definition = nil
@@ -39,7 +53,7 @@ function TetrisContainerData._calculateItemContainerDefinition(container, item)
     end
 
     local slotCount = math.ceil(capacity) * 2 + bonus
-	local slotCount = slotCount * 2
+	slotCount = math.floor(slotCount * CONTAINER_SIZE_MULT)
     local isInvCon = item:IsInventoryContainer()
     local maxItemSize = isInvCon and item:getMaxItemSize() or -1
 
@@ -74,8 +88,8 @@ end
 function TetrisContainerData._calculateVehicleTrunkContainerDefinition(container)
     local capacity = container:getCapacity()
 
-    local size = 50 + capacity * 2.5
-	local size = size * 2
+    local size = BASE_CONTAINER_HEIGHT + capacity * 2.5
+	size = math.floor(size * CONTAINER_SIZE_MULT)
     local x, y = TetrisContainerData._calculateDimensions(size)
     return {
         gridDefinitions = {{
