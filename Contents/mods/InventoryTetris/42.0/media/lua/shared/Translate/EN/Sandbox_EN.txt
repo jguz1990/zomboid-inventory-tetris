@@ -13,4 +13,7 @@ Sandbox_EN = {
 	Sandbox_InventoryTetris_SearchBodies_option1 = "Disabled",
 	Sandbox_InventoryTetris_SearchBodies_option2 = "Some Items",
 	Sandbox_InventoryTetris_SearchBodies_option3 = "Enabled",
+	Sandbox_InventoryTetris_SizeMult = "Grid Size Multipliers",
+	Sandbox_InventoryTetris_ItemSizeMult = "Item Size Mult",
+	Sandbox_InventoryTetris_ContainerSizeMult = "Item Size Mult",
 }

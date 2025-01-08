@@ -17,15 +17,14 @@ local SIZE_MULT_TOGGLE_TABLE = {
     ["Entertainment"] = true,
     ["Books"] = true,
     ["Seeds"] = true,
+    ["Food"] = true,
 }
 
 -- Type safety checks
 if (type(ITEM_SIZE_MULT) ~= "number") then
     ITEM_SIZE_MULT = 1
 end
-if (math.type(ITEM_SIZE_MULT) ~= "integer" or ITEM_SIZE_MULT <= 0) then
-    ITEM_SIZE_MULT = math.modf(math.abs(ITEM_SIZE_MULT))
-end
+ITEM_SIZE_MULT = math.floor(math.abs(ITEM_SIZE_MULT))
 
 
 function TetrisItemData._autoCalculateItemInfo(item, isSquished)
@@ -298,7 +297,37 @@ function TetrisItemData._calculateFoodSize(item)
     if item:getFluidContainer() then
         return TetrisItemData._calculateFluidContainerSize(item)
     end
-    return TetrisItemData._calculateItemSizeWeightBasedTall(item)
+
+    local width = 1
+    local height = 1
+
+    local weight = item:getActualWeight()
+
+    if weight < 0.2 then
+        width = 0.5
+        height = 0.5
+    elseif weight < 0.4 then
+        width = 0.5
+        height = 1
+    elseif weight < 0.6 then
+        width = 1
+        height = 1
+    elseif weight < 0.8 then
+        width = 1
+        height = 1.5
+    elseif weight < 1.0 then
+        width = 1.5
+        height = 1.5
+    else
+        width, height = TetrisContainerData._calculateDimensions(weight * 2, 2)
+    end
+
+    if (SIZE_MULT_TOGGLE_TABLE["Food"] == true) then
+        width = width * ITEM_SIZE_MULT
+        height = height * ITEM_SIZE_MULT
+    end
+
+    return width, height
 end
 
 function TetrisItemData._calculateFluidContainerSize(item)

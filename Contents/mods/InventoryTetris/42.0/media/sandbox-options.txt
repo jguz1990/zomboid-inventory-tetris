@@ -64,3 +64,20 @@ option InventoryTetris.SearchBodies
 	translation = InventoryTetris_SearchBodies,
 	valueTranslation = InventoryTetris_SearchBodies,
 }
+
+
+
+
+option InventoryTetris.ItemSizeMult
+{
+	type = integer, min = 1, max = 4, default = 1,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = InventoryTetris_ItemSizeMult,
+}
+
+option InventoryTetris.ContainerSizeMult
+{
+	type = integer, min = 1, max = 4, default = 1,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = InventoryTetris_ContainerSizeMult,
+}
