@@ -82,21 +82,15 @@ option InventoryTetris.ContainerBaseHeight
 	page = Sandbox_InventoryTetris_SizeMult,
 	translation = Sandbox_InventoryTetris_ContainerBaseHeight,
 }
-option InventoryTetris.ApplyContainerMult
-{
-	type = boolean, default = false,
-	page = Sandbox_InventoryTetris_SizeMult,
-	translation = Sandbox_InventoryTetris_ApplyContainerMult,
-}
 option InventoryTetris.ItemSizeMult
 {
-	type = integer, min = 1, max = 4, default = 1,
+	type = integer, min = 1, max = 4, default = 4,
 	page = Sandbox_InventoryTetris_SizeMult,
 	translation = Sandbox_InventoryTetris_ItemSizeMult,
 }
 option InventoryTetris.ContainerSizeMult
 {
-	type = float, min = 0.5, max = 4, default = 1,
+	type = integer, min = 1, max = 4, default = 4,
 	page = Sandbox_InventoryTetris_SizeMult,
 	translation = Sandbox_InventoryTetris_ContainerSizeMult,
 }

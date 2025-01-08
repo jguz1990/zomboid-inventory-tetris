@@ -6,13 +6,14 @@ local CONTAINER_SIZE_MULT = SandboxVars.InventoryTetris.ContainerSizeMult -- flo
 local DEFAULT_CONTAINER_WIDTH = 12 -- int
 local DEFAULT_CONTAINER_HEIGHT = 50 -- int
 
--- Enables multiplier for max container sizes
-local CONTAINER_MULT_ACTIVE = SandboxVars.InventoryTetris.ApplyContainerMult -- bool
-
 -- SandboxVar default inherited from original mod's value: 12
 local BASE_CONTAINER_WIDTH = SandboxVars.InventoryTetris.ContainerBaseWidth -- int
 -- SandboxVar default inherited from original mod's value: 50
 local BASE_CONTAINER_HEIGHT = SandboxVars.InventoryTetris.ContainerBaseHeight -- int
+print("BASE_CONTAINER_WIDTH: ", BASE_CONTAINER_WIDTH)
+print("BASE_CONTAINER_HEIGHT: ", BASE_CONTAINER_HEIGHT)
+print("CONTAINER_SIZE_MULT: ", CONTAINER_SIZE_MULT)
+print("Types: ", type(BASE_CONTAINER_WIDTH), type(BASE_CONTAINER_HEIGHT), type(CONTAINER_SIZE_MULT))
 
 local MAX_CONTAINER_WIDTH = math.floor(BASE_CONTAINER_WIDTH * CONTAINER_SIZE_MULT)
 local MAX_CONTAINER_HEIGHT = math.floor(BASE_CONTAINER_HEIGHT * CONTAINER_SIZE_MULT)
@@ -75,7 +76,7 @@ end
 
 function TetrisContainerData._calculateWorldContainerDefinition(container)
     local capacity = container:getCapacity()
-    local size = 2 * math.ceil(capacity)
+    local size = 2 * math.ceil(capacity * CONTAINER_SIZE_MULT)
     local x, y = TetrisContainerData._calculateDimensions(size)
     return {
         gridDefinitions = {{
@@ -134,7 +135,7 @@ end
 function TetrisContainerData._buildGridDefinitionForSlottedContainer(slotCount, maxItemSize)
     local def = { gridDefinitions = {} }
 
-    local maxPocketSize = math.max(math.floor(maxItemSize * 2), 2)
+    local maxPocketSize = math.max(math.floor(maxItemSize * CONTAINER_SIZE_MULT), 2)
     local evenSplit = slotCount % maxPocketSize == 0
 
     local pocketCount = math.max(math.floor(slotCount / maxPocketSize), 1)

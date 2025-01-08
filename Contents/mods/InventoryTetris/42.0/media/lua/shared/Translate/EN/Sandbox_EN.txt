@@ -18,7 +18,6 @@ Sandbox_EN = {
 	Sandbox_InventoryTetris_ItemSizeMult = "Size Mult for Items",
 	Sandbox_InventoryTetris_ContainerBaseWidth = "Container Base Width (affects max possible size)",
 	Sandbox_InventoryTetris_ContainerBaseHeight = "Container Base Height (affects max & min possible size)",
-	Sandbox_InventoryTetris_ApplyContainerMult = "Container Mult Enabled",
 	Sandbox_InventoryTetris_ContainerSizeMult = "Size Mult for Containers",
 	Sandbox_InventoryTetris_EnableSizeMultAffectsMagazines = "Affects Magazine Items",
 	Sandbox_InventoryTetris_EnableSizeMultAffectsAmmo = "Affects Ammo Items",
