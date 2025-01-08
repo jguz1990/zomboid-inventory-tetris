@@ -72,12 +72,74 @@ option InventoryTetris.ItemSizeMult
 {
 	type = integer, min = 1, max = 4, default = 1,
 	page = Sandbox_InventoryTetris_SizeMult,
-	translation = InventoryTetris_ItemSizeMult,
+	translation = Sandbox_InventoryTetris_ItemSizeMult,
 }
+
+option InventoryTetris.EnableSizeMultAffectsMagazines
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsMagazines,
+}
+option InventoryTetris.EnableSizeMultAffectsAmmo
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsAmmo,
+}
+option InventoryTetris.EnableSizeMultAffectsRangedWeapons
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsRangedWeapons,
+}
+option InventoryTetris.EnableSizeMultAffectsMeleeWeapons
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsMeleeWeapons,
+}
+option InventoryTetris.EnableSizeMultAffectsClothing
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsClothing,
+}
+option InventoryTetris.EnableSizeMultAffectsWeightBased
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsWeightBased,
+}
+option InventoryTetris.EnableSizeMultAffectsEntertainment
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsEntertainment,
+}
+option InventoryTetris.EnableSizeMultAffectsBooks
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsBooks,
+}
+option InventoryTetris.EnableSizeMultAffectsSeeds
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsSeeds,
+}
+option InventoryTetris.EnableSizeMultAffectsFood
+{
+	type = boolean, default = true,
+	page = Sandbox_InventoryTetris_SizeMult,
+	translation = Sandbox_InventoryTetris_EnableSizeMultAffectsFood,
+}
+
 
 option InventoryTetris.ContainerSizeMult
 {
 	type = integer, min = 1, max = 4, default = 1,
 	page = Sandbox_InventoryTetris_SizeMult,
-	translation = InventoryTetris_ContainerSizeMult,
+	translation = Sandbox_InventoryTetris_ContainerSizeMult,
 }
