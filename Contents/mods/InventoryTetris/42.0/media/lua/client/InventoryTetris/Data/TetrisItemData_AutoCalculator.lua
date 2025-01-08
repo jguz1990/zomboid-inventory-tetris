@@ -4,20 +4,20 @@ local SQUISH_FACTOR = 3
 local FLOAT_CORRECTION = 0.001
 
 -- Whole numbers only
-local ITEM_SIZE_MULT = 2 -- int
+local ITEM_SIZE_MULT = SandboxVars.InventoryTetris.ItemSizeMult -- int
 
 -- Category specific toggles for size multiplier
 local SIZE_MULT_TOGGLE_TABLE = {
-    ["Magazines"] = true,
-    ["Ammo"] = true,
-    ["RangedWeapons"] = true,
-    ["MeleeWeapons"] = true,
-    ["Clothing"] = true,
-    ["WeightBased"] = true,
-    ["Entertainment"] = true,
-    ["Books"] = true,
-    ["Seeds"] = true,
-    ["Food"] = true,
+    ["Magazines"]     = SandboxVars.InventoryTetris.EnableSizeMultAffectsMagazines,
+    ["Ammo"]          = SandboxVars.InventoryTetris.EnableSizeMultAffectsAmmo,
+    ["RangedWeapons"] = SandboxVars.InventoryTetris.EnableSizeMultAffectsRangedWeapons,
+    ["MeleeWeapons"]  = SandboxVars.InventoryTetris.EnableSizeMultAffectsMeleeWeapons,
+    ["Clothing"]      = SandboxVars.InventoryTetris.EnableSizeMultAffectsClothing,
+    ["WeightBased"]   = SandboxVars.InventoryTetris.EnableSizeMultAffectsWeightBased,
+    ["Entertainment"] = SandboxVars.InventoryTetris.EnableSizeMultAffectsEntertainment,
+    ["Books"]         = SandboxVars.InventoryTetris.EnableSizeMultAffectsBooks,
+    ["Seeds"]         = SandboxVars.InventoryTetris.EnableSizeMultAffectsSeeds,
+    ["Food"]          = SandboxVars.InventoryTetris.EnableSizeMultAffectsFood,
 }
 
 -- Type safety checks
@@ -25,7 +25,6 @@ if (type(ITEM_SIZE_MULT) ~= "number") then
     ITEM_SIZE_MULT = 1
 end
 ITEM_SIZE_MULT = math.floor(math.abs(ITEM_SIZE_MULT))
-
 
 function TetrisItemData._autoCalculateItemInfo(item, isSquished)
     local data = {}
